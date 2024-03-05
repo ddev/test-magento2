@@ -1,0 +1,139 @@
+#ddev-generated
+
+http:
+  routers:
+    
+    
+    ddev-m3-elasticsearch-9200-http:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-elasticsearch-9200-http"
+      tls: false
+      entrypoints:
+        - http-9200
+    
+    
+    
+    ddev-m3-web-80-http:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-web-80-http"
+      tls: false
+      entrypoints:
+        - http-80
+    
+    
+    ddev-m3-web-8025-http:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-web-8025-http"
+      tls: false
+      entrypoints:
+        - http-8025
+    
+    
+    
+    
+    
+    ddev-m3-elasticsearch-9200-https:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-elasticsearch-9200-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-9201
+    
+    
+    
+    
+    ddev-m3-web-80-https:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-web-80-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-443
+    
+    
+    ddev-m3-web-8025-https:
+      
+      rule: HostRegexp(`ddev-m3.ddev.site`)
+      
+      middlewares:
+        - autodetect
+      service: "ddev-m3-web-8025-https"
+      
+      tls: true
+      
+      entrypoints:
+        - http-8026
+    
+    
+
+  # autodetect won't be needed in Traefik 3 https://github.com/traefik/traefik/pull/9546
+  middlewares:
+    autodetect:
+      contentType:
+        autoDetect: false
+
+  services:
+    
+    ddev-m3-elasticsearch-9200-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-elasticsearch:9200
+    
+    ddev-m3-elasticsearch-9200-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-elasticsearch:9200
+    
+    ddev-m3-web-80-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-web:80
+    
+    ddev-m3-web-8025-http:
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-web:8025
+    
+    ddev-m3-web-80-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-web:80
+    
+    ddev-m3-web-8025-https:
+    
+      loadbalancer:
+        servers:
+          - url: http://ddev-ddev-m3-web:8025
+    
+
+
+tls:
+  certificates:
+    - certFile: /mnt/ddev-global-cache/traefik/certs/ddev-m3.crt
+      keyFile: /mnt/ddev-global-cache/traefik/certs/ddev-m3.key
+
